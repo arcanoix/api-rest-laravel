@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Arr;
 
 class ProductRequest extends FormRequest
 {
@@ -45,10 +44,15 @@ class ProductRequest extends FormRequest
         }
     }
 
-    public function messages(): Arr
+    public function messages(): array
     {
         return [
-            'name'
+            'name.required'     => 'the name field product is required',
+            'name.unique'       => 'the name of product is unique',
+            'price.required'    => 'the price is required',
+            'price.decimal'     => 'the price is two decimal, example: 10.2',
+            'category.required' => 'the category is required',
+            'category.integer'  => 'the category is integer, example: 1'
         ];
     }
 }

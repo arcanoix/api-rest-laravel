@@ -18,10 +18,8 @@ class ProductResource extends JsonResource
             'id'          => $this->id,
             'name'        => $this->name,
             'description' => $this->description,
-            'price'       => $this->price,
-            'category'    => CategoryResource::make($this->category),
-            'created_at'  => $this->created_at,
-            'updated_at'  => $this->updated_at,
+            'price'       => floatval($this->price),
+            'category'    => CategoryResource::make($this->category)
         ];
     }
 }

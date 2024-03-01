@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AuthRequest;
+use App\Http\Requests\LoginRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -12,22 +14,9 @@ class AuthController extends Controller
 {
 
 
-    public function register(Request $request): JsonResponse
+    public function register(AuthRequest $request): JsonResponse
     {
-        $validate = Validator::make($request->all(), [
-            'name' => 'required|string|max:250',
-            'email' => 'required|string|email:rfc,dns|max:250|unique:users,email',
-            'password' => 'required|string|min:8|confirmed'
-        ]);
-
-        if($validate->fails()){
-            return response()->json([
-                'status' => 'failed',
-                'message' => 'Validation Error!',
-                'data' => $validate->errors(),
-            ], 403);
-        }
-
+       
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -47,21 +36,8 @@ class AuthController extends Controller
     }
 
     
-    public function login(Request $request): JsonResponse
+    public function login(LoginRequest $request): JsonResponse
     {
-        $validate = Validator::make($request->all(), [
-            'email' => 'required|string|email',
-            'password' => 'required|string'
-        ]);
-
-        if($validate->fails()){
-            return response()->json([
-                'status' => 'failed',
-                'message' => 'Validation Error!',
-                'data' => $validate->errors(),
-            ], 403);  
-        }
-
         $user = User::where('email', $request->email)->first();
 
         if(!$user || !Hash::check($request->password, $user->password)) {

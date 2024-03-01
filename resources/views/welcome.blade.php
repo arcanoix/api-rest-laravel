@@ -42,6 +42,7 @@
                 <div class="flex justify-center mt-16 px-0 sm:items-center sm:justify-between">
                     <div class="text-center text-sm sm:text-left">
                         <h1>Api Rest full</h1>
+                        <a href="{{ url('api/documentation') }}">Documentation</a>
                     </div>
 
                 </div>
